@@ -6,16 +6,21 @@ use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Resources\CustomerCollection;
+use App\Filters\CustomerFilter;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::all();
-        return new CustomerCollection($customers);
+        $filter     = new CustomerFilter();
+        $queryItems = $filter->transform($request);
+        
+        $customers  = Customer::where($queryItems);
+        return new CustomerCollection($customers->paginate()->appends($request->query()));
     }
 
     /**
