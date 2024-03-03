@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Resources\CustomerCollection;
 use App\Filters\CustomerFilter;
 use Illuminate\Http\Request;
+use App\Http\Resources\CustomerResource;
 
 class CustomerController extends Controller
 {
@@ -16,10 +17,17 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $filter     = new CustomerFilter();
-        $queryItems = $filter->transform($request);
+        $filter        = new CustomerFilter();
+        $queryItems    = $filter->transform($request);
         
-        $customers  = Customer::where($queryItems);
+        $includeVoices = $request->query('includeInvoices');
+        
+        $customers     = Customer::where($queryItems);
+        
+        if($includeVoices){
+            $customers = $customers->with('invoices');
+        }
+        
         return new CustomerCollection($customers->paginate()->appends($request->query()));
     }
 
@@ -36,7 +44,7 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        //
+        return new CustomerResource(Customer::create($request->all()));
     }
 
     /**
@@ -44,7 +52,11 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        $includeInvoices = request()->query('includeInvoices');
+        if($includeInvoices){
+            return new CustomerResource($customer->loadMissing('invoices'));
+        }
+        return new CustomerResource($customer);
     }
 
     /**
@@ -60,7 +72,7 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $customer->update($request->all());
     }
 
     /**
