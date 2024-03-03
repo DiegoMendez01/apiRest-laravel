@@ -39,7 +39,9 @@ xampp\htdocs\
 
 3. Debes clonar el repositorio utilizando el manejador de versiones Git Bash
 
-### `git clone https://github.com/DiegoMendez01/apiRest-laravel/tree/develop`
+```
+git clone https://github.com/DiegoMendez01/apiRest-laravel/tree/develop
+```
 
 4. Navega al directorio del proyecto:
 
