@@ -1,66 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API REST de Gestión de Clientes y Facturas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+_API desarrollada por Diego Mendez Rojas_
 
-## About Laravel
+## Comenzando 🚀
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Pre-requisitos 📋
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Para poder inicializar el sistema se requiere lo siguiente:
 
-## Learning Laravel
+```
+1. PHP >= 7.4
+2. Composer
+3. Laravel CLI
+4. Postman
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Construido con 🛠️
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+_Las herramientas utilizadas son las siguientes_
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* [Eclipse PHP Developers](https://www.eclipse.org/downloads/packages/release/helios/sr2/eclipse-php-developers) - Editor de Codigo
+* [Git](https://git-scm.com/) - Manejador de Versiones
+* [Composer](https://getcomposer.org/download/) - Instalador de paquetes
+* [XAMPP Control](https://www.apachefriends.org/download.html) - Panel de control de servidor PHP
+* [Postman](https://www.postman.com/downloads/) - Pruebas de la API
 
-## Laravel Sponsors
+## Instalación 🔧
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Debes tener instalado XAMPP
 
-### Premium Partners
+2. Una vez instalado dirigirte a la carpeta htdocs
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```
+xampp\htdocs\
+```
 
-## Contributing
+3. Debes clonar el repositorio utilizando el manejador de versiones Git Bash
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+git clone https://github.com/DiegoMendez01/apiRest-laravel/tree/develop
+```
 
-## Code of Conduct
+4. Navega al directorio del proyecto:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+cd apiRest-laravel
+```
 
-## Security Vulnerabilities
+5. Instala las dependencias necesarias:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+composer install
+```
 
-## License
+6. Ejecuta las migraciones para crear las tablas en la base de datos:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+php artisan migrate
+```
+
+7. Opcional: Ejecuta los seeders para poblar la base de datos con datos de prueba:
+
+```
+php artisan db:seed
+```
+
+## Uso 📋
+
+### Autenticación
+
+La API utiliza Laravel Sanctum para la autenticación. Puedes autenticarte enviando una solicitud POST a la ruta `/setup` para generar las credenciales de usuario.
+
+### Endpoints
+
+- `/api/v1/customers`: Obtiene la lista de clientes.
+- `/api/v1/customers/{id}`: Obtiene un cliente específico por su ID.
+- `/api/v1/invoices`: Obtiene la lista de facturas.
+- `/api/v1/customers?includeInvoices=true`: Obtiene los clientes con sus facturas
+- `/api/v1/customers?status[eq]=B&includeInvoices=true`: Obtiene los clientes con sus facturas y segun el estado
+- `/api/v1/customers/{id}?status[eq]={status}&includeInvoices=true`: Obtiene un cliente por su ID con sus facturas y segun el estado
+
+## Construido con 🛠️
+
+- Laravel
+- Composer
+
+## Filtrado de URL 📋
+
+Para conocer los filtros disponibles en la URL de la API, consulta la carpeta app/filters. Aquí encontrarás información sobre los filtros disponibles para clientes e invoices.
+
+## Author
+
+* **Diego Mendez Rojas** - *Desarrollador Web* - *Repositorio GitHub* - [DiegoMendez01](https://github.com/DiegoMendez01)
