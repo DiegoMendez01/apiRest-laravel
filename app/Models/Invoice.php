@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        
+    ];
+    
+    /**
+     * Get the user that owns the Invoice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }
